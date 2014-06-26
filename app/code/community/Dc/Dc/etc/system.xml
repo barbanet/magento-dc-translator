@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Dc_Dc
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Dc
+ * @package    Dc_Dc
+ * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @version    1.0.0
+ */
+-->
+<config>
+    <tabs>
+        <dc translate="label" module="dc">
+            <label>DC MODULES</label>
+            <sort_order>10000</sort_order>
+        </dc>
+    </tabs>    
+    <sections>
+        <dc translate="label" module="dc">
+            <label>Dc</label>
+            <tab>dc</tab>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <sort_order>1001</sort_order>
+            <groups>
+                <extensions translate="label">
+                    <label>Installed Extensions</label>
+                    <frontend_type>text</frontend_type>
+                    <frontend_model>dc/system_config_form_fieldset_extensions</frontend_model>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                </extensions>
+            </groups>
+        </dc>
+    </sections>
+</config>

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Dc_Translator
+ * 
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Dc
+ * @package    Dc_Translator
+ * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @version    1.0.0
+ */
+-->
+<config>
+    <menu>
+        <system>
+            <children>
+                <translator module="translator">
+                    <title>Translator</title>
+                    <sort_order>25</sort_order>
+                    <action>translator/adminhtml_package</action>
+                </translator>
+            </children>
+        </system>
+    </menu>
+	<acl>
+		<resources>
+			<all>
+				<title>Allow Everything</title>
+			</all>
+			<admin>
+                <children>
+                    <system>
+                        <children>
+                            <translator>
+                                <title>Translator</title>
+                                <sort_order>1025</sort_order>
+                            </translator>
+                            <config>
+                                <children>
+                                    <translator>
+                                        <title>Translator</title>
+                                        <sort_order>1025</sort_order>
+                                    </translator>
+                                </children>
+                            </config>
+                        </children>
+                   </system>
+                </children>
+            </admin>
+		</resources>
+	</acl>
+</config>

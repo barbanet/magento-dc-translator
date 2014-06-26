@@ -1,0 +1,54 @@
+<?php
+/**
+ * Dc_Translator
+ * 
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Dc
+ * @package    Dc_Translator
+ * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @version    1.0.0
+ */
+?>
+<script type="text/javascript">
+//<![CDATA[
+DcDownloader = new DcDownloader('<?php echo $this->getZipUrl(); ?>', '<?php echo $this->getPackageLocale(); ?>');
+//]]>
+</script>
+<script type="text/javascript">
+    <?php $timestamp = time(); ?>
+    jQuery(function() {
+        jQuery('#file_upload').uploadify({
+            'buttonText': '<?php echo $this->__('Upload CSV files'); ?>',
+            'buttonCursor': 'arrow',
+            'fileTypeDesc': 'Package files',
+            'fileTypeExts': '*.csv',
+            'fileObjName' : 'package_file',
+            'height': 15,
+            'method': 'post',
+            'multi': true,
+            'progressData': 'speed',
+            'removeCompleted': false,
+            'formData': {
+                'timestamp': '<?php echo $timestamp; ?>',
+                'token': '<?php echo md5('unique_salt' . $timestamp); ?>',
+                'form_key': '<?php echo $this->getFormKey(); ?>',
+                'package_locale': '<?php echo $this->getPackageLocale(); ?>'
+            },
+            'itemTemplate' : '<div id="${fileID}" class="uploadify-queue-item">\
+                    <div class="cancel">\
+                        <a href="javascript:jQuery(\'#${instanceID}\').uploadify(\'cancel\', \'${fileID}\')">X</a>\
+                    </div>\
+                    <span class="fileName">${fileName} (${fileSize})</span><span class="data"></span>\
+                </div>',
+            'swf': '<?php echo $this->getUploaderUrl('uploadify/uploadify.swf'); ?>',
+            'uploader': '<?php echo $this->getUploaderPost(); ?>',
+            'auto': false,
+        });
+    });
+</script>

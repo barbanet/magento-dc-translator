@@ -13,7 +13,7 @@
  * @package    Dc_Translator
  * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- * @version    1.0.0
+ * @version    1.0.1
  */
 -->
 <config>
@@ -34,15 +34,15 @@
                     <show_in_website>0</show_in_website>
                     <show_in_store>0</show_in_store>
                     <fields>
-                        <enable translate="label">
-                            <label>Enable</label>
+                        <enabled translate="label">
+                            <label>Enabled</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <sort_order>1</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
-                        </enable>
+                        </enabled>
                         <client_id translate="label">
                             <label>Client Id</label>
                             <frontend_type>obscure</frontend_type>
@@ -52,7 +52,7 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                             <depends>
-                                <enable>1</enable>
+                                <enabled>1</enabled>
                             </depends>
                         </client_id>
                         <client_secret translate="label">
@@ -64,7 +64,7 @@
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
                             <depends>
-                                <enable>1</enable>
+                                <enabled>1</enabled>
                             </depends>
                         </client_secret>
                         <test_credentials translate="label">
@@ -77,7 +77,7 @@
                             <show_in_store>0</show_in_store>
                             <comment><![CDATA[Execute this action after you have saved your data.]]></comment>
                             <depends>
-                                <enable>1</enable>
+                                <enabled>1</enabled>
                             </depends>
                         </test_credentials>
                      </fields>

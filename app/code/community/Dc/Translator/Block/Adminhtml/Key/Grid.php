@@ -12,7 +12,7 @@
  * @package    Dc_Translator
  * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- * @version    1.0.0
+ * @version    1.0.1
  */
 
 class Dc_Translator_Block_Adminhtml_Key_Grid extends Mage_Adminhtml_Block_Widget_Grid

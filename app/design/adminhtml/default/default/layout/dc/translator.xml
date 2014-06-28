@@ -13,7 +13,7 @@
  * @package    Dc_Translator
  * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- * @version    1.0.0
+ * @version    1.0.1
  */
 -->
 <layout version="0.1.0">
@@ -38,6 +38,11 @@
             <block type="translator/adminhtml_package_js" name="translator.package.js" template="dc/translator/package/js.phtml" />
         </reference>
     </translator_adminhtml_package_edit>
+    <translator_adminhtml_package_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="translator/adminhtml_package_grid" name="translator_package_grid" />
+        </block>
+    </translator_adminhtml_package_grid>
     <translator_adminhtml_key_index>
         <reference name="content">
             <block type="translator/adminhtml_key" name="translator_key" />
@@ -51,4 +56,9 @@
             <block type="translator/adminhtml_key_js" name="translator.key.js" template="dc/translator/key/js.phtml" />
         </reference>
     </translator_adminhtml_key_edit>
+    <translator_adminhtml_key_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="translator/adminhtml_key_grid" name="translator_key_grid" />
+        </block>
+    </translator_adminhtml_key_grid>
 </layout>

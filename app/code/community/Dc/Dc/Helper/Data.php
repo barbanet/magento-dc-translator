@@ -12,7 +12,6 @@
  * @package    Dc_Dc
  * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
- * @version    1.0.0
  */
 
 class Dc_Dc_Helper_Data extends Mage_Core_Helper_Abstract

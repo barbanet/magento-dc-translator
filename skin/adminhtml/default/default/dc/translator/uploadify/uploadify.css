@@ -59,7 +59,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 	*/
 }
 .uploadify:hover .uploadify-button {
-    background: url("../../images/btn_over_bg.gif") repeat-x scroll 0 0 #F77C16;
+    /*background: url("../../../images/btn_over_bg.gif") repeat-x scroll 0 0 #F77C16;*/
     /*
 	background-color: #606060;
 	background-image: linear-gradient(top, #606060 0%, #808080 100%);

@@ -29,7 +29,7 @@ class Dc_Translator_Block_Adminhtml_Package_Js extends Mage_Adminhtml_Block_Temp
     }
     
     public function getUploaderUrl($file) {
-        return $this->getSkinUrl('translator/' . $file);
+        return $this->getSkinUrl('dc/translator/' . $file);
     }
     
     public function getUploaderPost() {

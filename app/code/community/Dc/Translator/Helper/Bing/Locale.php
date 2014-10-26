@@ -25,6 +25,7 @@ class Dc_Translator_Helper_Bing_Locale extends Mage_Core_Helper_Abstract
                                         'ar_SA' => 'ar',
                                         'bg_BG' => 'bg',
                                         'ca_ES' => 'ca',
+                                        'cy_GB' => 'cy',
                                         'zh_CN' => 'zh-CHS',
                                         'zh_HK' => 'zh-CHS',
                                         'zh_TW' => 'zh-CHS',

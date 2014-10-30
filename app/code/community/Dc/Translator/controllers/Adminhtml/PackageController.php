@@ -216,10 +216,6 @@ class Dc_Translator_Adminhtml_PackageController extends Mage_Adminhtml_Controlle
         } else {
             try {
                 foreach ($packageIds as $packageId) {
-                    if ($packageId == 1) {
-                        Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Locale en_US can not be deleted'));
-                        continue;
-                    }
                     $package = Mage::getModel('translator/package')->load($packageId);
                     $package->delete();
                 }

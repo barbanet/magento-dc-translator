@@ -112,17 +112,21 @@ class Dc_Translator_Model_Package extends Mage_Core_Model_Abstract
     public function getNotImportedPackages()
     {
         $_locales = array();
+        $_directories = array();
         $path = Mage::getBaseDir() . DS . 'app' . DS . 'locale' . DS;
         $directory = dir($path);
         while ($locale = $directory->read()) {
             if (is_dir($path . DS . $locale) && strlen($locale) == 5 && !array_key_exists($locale, $this->toOptionArray())) {
-                $_locales[] = array(
-                                    'value' => $locale,
-                                    'label' => $this->getFancyName($locale)
-                                );
+                $_directories[$locale] = $this->getFancyName($locale);
             }
         }
-        sort($_locales, SORT_STRING);
+        sort($_directories, SORT_STRING);
+        foreach ($_directories as $_locale_code => $_locale_name) {
+            $_locales[] = array(
+                'value' => $_locale_code,
+                'label' => $_locale_name
+            );
+        }
         return $_locales;
     }
 

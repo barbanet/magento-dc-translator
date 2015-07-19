@@ -10,124 +10,157 @@
  *
  * @category   Dc
  * @package    Dc_Translator
- * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @copyright  Copyright (c) 2012-2015 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
 class Dc_Translator_Model_Package extends Mage_Core_Model_Abstract
 {
-    
-    protected $_system_locales;
+
+    /**
+     * @var
+     */
+    protected $system_locales;
 
     public function _construct()
     {
         parent::_construct();
         $this->_init('translator/package');
     }
-    
+
+    /**
+     * Get the full list of locale packages.
+     *
+     * @return mixed
+     */
     private function _getLocales()
     {
-        if (!$this->_system_locales) {
-            $_locales = Mage::getSingleton('core/locale')->getOptionLocales();
-            foreach ($_locales as $_locale) {
-                $this->_system_locales[$_locale['value']] = $_locale['label'];
+        if (!$this->system_locales) {
+            $locales = Mage::getSingleton('core/locale')->getOptionLocales();
+            foreach ($locales as $locale) {
+                $this->system_locales[$locale['value']] = $locale['label'];
             }
         }
-        return $this->_system_locales;
+        return $this->system_locales;
     }
-    
+
+    /**
+     * Returns list of available locales into the module.
+     *
+     * @param null $empty
+     * @return array
+     */
     public function getAvailableLocales($empty = null)
     {
-        $_locales = $this->_getLocales();
-        $_available = array();
-        $_packages = Mage::getModel('translator/package')->getCollection();
+        $locales = $this->_getLocales();
+        $available = array();
+        $packages = Mage::getModel('translator/package')->getCollection();
         if ($empty) {
-            $_available[] = array(
+            $available[] = array(
                                 'value' => '',
                                 'label' => Mage::helper('translator')->__('None (empty one)')
                             );
         }
-        foreach ($_packages as $_package) {
-            if (array_key_exists($_package->getLocale(), $_locales)) {
-                $_available[] = array(
-                                    'value' => $_package->getLocale(),
-                                    'label' => $_locales[$_package->getLocale()]
+        foreach ($packages as $package) {
+            if (array_key_exists($package->getLocale(), $locales)) {
+                $available[] = array(
+                                    'value' => $package->getLocale(),
+                                    'label' => $locales[$package->getLocale()]
                                 );
             }
         }
-        return $_available;
+        return $available;
     }
-    
+
+    /**
+     * @return array
+     */
     public function toOptionArray()
     {
-        $_locales = $this->_getLocales();
-        $_available = array();
-        $_packages = Mage::getModel('translator/package')->getCollection();
-        foreach ($_packages as $_package) {
-            if (array_key_exists($_package->getLocale(), $_locales)) {
-                $_available[$_package->getLocale()] = $_locales[$_package->getLocale()];
+        $locales = $this->_getLocales();
+        $available = array();
+        $packages = Mage::getModel('translator/package')->getCollection();
+        foreach ($packages as $package) {
+            if (array_key_exists($package->getLocale(), $locales)) {
+                $available[$package->getLocale()] = $locales[$package->getLocale()];
             }
         }
-        return $_available;
+        return $available;
     }
-    
+
+    /**
+     * Returns the list of existing locales on filesystem that does not exists into the module.
+     *
+     * @return array
+     */
     public function getPendingLocales()
     {
-        $_locales = $this->_getLocales();
-        $_pending = array();
-        $_packages = Mage::getModel('translator/package')->getCollection();
-        foreach ($_packages as $_package) {
-            if (array_key_exists($_package->getLocale(), $_locales)) {
-                unset($_locales[$_package->getLocale()]);
+        $locales = $this->_getLocales();
+        $pending = array();
+        $packages = Mage::getModel('translator/package')->getCollection();
+        foreach ($packages as $package) {
+            if (array_key_exists($package->getLocale(), $locales)) {
+                unset($locales[$package->getLocale()]);
             }
         }
-        foreach ($_locales as $_key => $_value) {
-            $_pending[] = array(
-                                'value' => $_key,
-                                'label' => $_value
+        foreach ($locales as $key => $value) {
+            $pending[] = array(
+                                'value' => $key,
+                                'label' => $value
                             );
         }
-        return $_pending;
+        return $pending;
     }
-    
+
+    /**
+     * @param $locale
+     * @return bool
+     */
     public function getPackageByLocale($locale)
     {
-        $_data = Mage::getModel('translator/package')->getCollection()
+        $data = Mage::getModel('translator/package')->getCollection()
                     ->addFieldToFilter('locale', array('eq' => $locale));
-        if ($_data->getSize() > 0) {
-            return $_data->getFirstItem();
+        if ($data->getSize() > 0) {
+            return $data->getFirstItem();
         }
         return false;
     }
-    
+
+    /**
+     * Get the full name of the locale instead the code.
+     *
+     * @param $locale
+     * @return bool
+     */
     public function getFancyName($locale)
     {
-        $_locales = $this->_getLocales();
-        if (array_key_exists($locale, $_locales)) {
-            return $_locales[$locale];
+        $locales = $this->_getLocales();
+        if (array_key_exists($locale, $locales)) {
+            return $locales[$locale];
         }
         return false;
     }
-    
+
+    /**
+     * Get the list of not imported locales into the module.
+     *
+     * @return array
+     */
     public function getNotImportedPackages()
     {
-        $_locales = array();
-        $_directories = array();
+        $locales = array();
         $path = Mage::getBaseDir() . DS . 'app' . DS . 'locale' . DS;
         $directory = dir($path);
         while ($locale = $directory->read()) {
             if (is_dir($path . DS . $locale) && strlen($locale) == 5 && !array_key_exists($locale, $this->toOptionArray())) {
-                $_directories[$locale] = $this->getFancyName($locale);
+                $locales[] = array(
+                                    'value' => $locale,
+                                    'label' => $this->getFancyName($locale)
+                                );
             }
         }
-        sort($_directories, SORT_STRING);
-        foreach ($_directories as $_locale_code => $_locale_name) {
-            $_locales[] = array(
-                'value' => $_locale_code,
-                'label' => $_locale_name
-            );
-        }
-        return $_locales;
+        sort($locales, SORT_STRING);
+        return $locales;
     }
 
 }

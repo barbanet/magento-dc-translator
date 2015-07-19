@@ -10,7 +10,7 @@
  *
  * @category   Dc
  * @package    Dc_Translator
- * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @copyright  Copyright (c) 2012-2015 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -22,19 +22,26 @@ class Dc_Translator_Model_Key extends Mage_Core_Model_Abstract
         parent::_construct();
         $this->_init('translator/key');
     }
-    
+
+    /**
+     * Get the list of modules per package.
+     *
+     * @param $package_id
+     * @return array
+     */
     public function getPackageModules($package_id)
     {
-        $_modules = array(); 
-        $_connection = Mage::getSingleton('core/resource')->getConnection('read');
-        $_table = Mage::getSingleton('core/resource')->getTableName('translator/file');
-        $_data = $_connection->fetchAll("SELECT distinct(package_module) FROM {$_table} ORDER BY package_module ASC;");
-        if (is_array($_data) && !empty($_data)) {
-            foreach ($_data as $_value) {
-                $_modules[$_value['package_module']] = $_value['package_module'];
+        //TODO: validate this method because currently the package ID is not used.
+        $modules = array();
+        $connection = Mage::getSingleton('core/resource')->getConnection('read');
+        $table = Mage::getSingleton('core/resource')->getTableName('translator/file');
+        $data = $connection->fetchAll("SELECT distinct(package_module) FROM {$table} ORDER BY package_module ASC;");
+        if (is_array($data) && !empty($data)) {
+            foreach ($data as $_value) {
+                $modules[$_value['package_module']] = $_value['package_module'];
             }
         }
-        return $_modules;
+        return $modules;
     }
 
 }

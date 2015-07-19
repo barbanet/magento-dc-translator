@@ -10,13 +10,20 @@
  *
  * @category   Dc
  * @package    Dc_Translator
- * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @copyright  Copyright (c) 2012-2015 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
 class Dc_Translator_Helper_Data extends Mage_Core_Helper_Abstract
 {
-    
+
+    /**
+     * Updates the same key across all the modules.
+     *
+     * @param $package_id
+     * @param $package_key
+     * @param $package_value
+     */
     public function keyMassUpdate($package_id, $package_key, $package_value) {
         $now = now();
         $connection = Mage::getSingleton('core/resource')->getConnection('read');

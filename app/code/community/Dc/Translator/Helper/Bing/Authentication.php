@@ -10,40 +10,50 @@
  *
  * @category   Dc
  * @package    Dc_Translator
- * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @copyright  Copyright (c) 2012-2015 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
 class Dc_Translator_Helper_Bing_Authentication extends Mage_Core_Helper_Abstract
 {
 
-    public function getTokens($grantType, $scopeUrl, $clientID, $clientSecret, $authUrl) {
+    /**
+     * @param $grant_type
+     * @param $scope_url
+     * @param $client_id
+     * @param $client_secret
+     * @param $auth_url
+     * @return mixed
+     * @throws Exception
+     */
+    public function getTokens($grant_type, $scope_url, $client_id, $client_secret, $auth_url)
+    {
         try {
-            $ch = curl_init();
-            $paramArr = array (
-                 'grant_type'    => $grantType,
-                 'scope'         => $scopeUrl,
-                 'client_id'     => $clientID,
-                 'client_secret' => $clientSecret
+            $curl = curl_init();
+            $params = array (
+                 'grant_type'    => $grant_type,
+                 'scope'         => $scope_url,
+                 'client_id'     => $client_id,
+                 'client_secret' => $client_secret
             );
-            $paramArr = http_build_query($paramArr);
-            curl_setopt($ch, CURLOPT_URL, $authUrl);
-            curl_setopt($ch, CURLOPT_POST, TRUE);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $paramArr);
-            curl_setopt ($ch, CURLOPT_RETURNTRANSFER, TRUE);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            $strResponse = curl_exec($ch);
-            $curlErrno = curl_errno($ch);
-            if($curlErrno){
-                $curlError = curl_error($ch);
-                throw new Exception($curlError);
+            $params = http_build_query($params);
+            curl_setopt($curl, CURLOPT_URL, $auth_url);
+            curl_setopt($curl, CURLOPT_POST, TRUE);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
+            curl_setopt ($curl, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+            $string_response = curl_exec($curl);
+            $curl_errno = curl_errno($curl);
+            if($curl_errno){
+                $curl_error = curl_error($curl);
+                throw new Exception($curl_error);
             }
-            curl_close($ch);
-            $objResponse = json_decode($strResponse);
-            if (isset($objResponse->error)) {
-                throw new Exception($objResponse->error_description);
+            curl_close($curl);
+            $object_response = json_decode($string_response);
+            if (isset($object_response->error)) {
+                throw new Exception($object_response->error_description);
             }
-            return $objResponse->access_token;
+            return $object_response->access_token;
         } catch (Exception $e) {
             Mage::logException($e);
             throw new Exception($e->getMessage());

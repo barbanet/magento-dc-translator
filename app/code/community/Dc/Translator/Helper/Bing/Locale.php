@@ -10,14 +10,17 @@
  *
  * @category   Dc
  * @package    Dc_Translator
- * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @copyright  Copyright (c) 2012-2015 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
 class Dc_Translator_Helper_Bing_Locale extends Mage_Core_Helper_Abstract
 {
 
-    protected $_supported_locales = array(
+    /**
+     * @var array
+     */
+    protected $supported_locales = array(
                                         'ar_DZ' => 'ar',
                                         'ar_EG' => 'ar',
                                         'ar_KW' => 'ar',
@@ -84,30 +87,49 @@ class Dc_Translator_Helper_Bing_Locale extends Mage_Core_Helper_Abstract
                                         'vi_VN' => 'vi'
                                     );
 
+    /**
+     * Return Bing locale code.
+     *
+     * @param $locale
+     * @return bool
+     */
     public function getBingLocale($locale) {
-        if (array_key_exists($locale, $this->_supported_locales)) {
-            return $this->_supported_locales[$locale];
+        if (array_key_exists($locale, $this->supported_locales)) {
+            return $this->supported_locales[$locale];
         }
         return false;
     }
-    
-    public function getBingLocales() {
-        $_bing_locales = array();
-        $_locales = Mage::getSingleton('core/locale')->getOptionLocales();
-        foreach ($_locales as $_locale) {
-            if (array_key_exists($_locale['value'], $this->_supported_locales)) {
-                $_bing_locales[$_locale['value']] = $_locale['label'];
+
+    /**
+     * List of locales supported by Bing.
+     *
+     * @return array
+     */
+    public function getBingLocales()
+    {
+        $bing_locales = array();
+        $locales = Mage::getSingleton('core/locale')->getOptionLocales();
+        foreach ($locales as $locale) {
+            if (array_key_exists($locale['value'], $this->supported_locales)) {
+                $bing_locales[$locale['value']] = $locale['label'];
             }
         }
-        return $_bing_locales;
+        return $bing_locales;
     }
-    
-    public function validateByPackageId($package_id) {
-        $_package = Mage::getModel('translator/package')->load($package_id);
-        if ($_package) {
-            $_bing_locale = $this->getBingLocale($_package->getLocale());
-            if ($_bing_locale) {
-                return $_bing_locale;
+
+    /**
+     * Checks if Magento locale is valid for Bing.
+     *
+     * @param $package_id
+     * @return bool
+     */
+    public function validateByPackageId($package_id)
+    {
+        $package = Mage::getModel('translator/package')->load($package_id);
+        if ($package) {
+            $bing_locale = $this->getBingLocale($package->getLocale());
+            if ($bing_locale) {
+                return $bing_locale;
             }
         }
         return false;

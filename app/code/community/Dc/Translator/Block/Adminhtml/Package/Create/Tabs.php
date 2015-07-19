@@ -10,7 +10,7 @@
  *
  * @category   Dc
  * @package    Dc_Translator
- * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @copyright  Copyright (c) 2012-2015 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -23,11 +23,6 @@ class Dc_Translator_Block_Adminhtml_Package_Create_Tabs extends Mage_Adminhtml_B
         $this->setId('package_tabs');
         $this->setDestElementId('edit_form');
         $this->setTitle(Mage::helper('translator')->__('Package'));
-    }
-
-    protected function _prepareLayout()
-    {
-        return parent::_prepareLayout();
     }
 
     protected function _beforeToHtml()

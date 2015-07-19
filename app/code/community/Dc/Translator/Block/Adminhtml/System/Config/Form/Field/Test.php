@@ -10,7 +10,7 @@
  *
  * @category   Dc
  * @package    Dc_Translator
- * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @copyright  Copyright (c) 2012-2015 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -22,7 +22,7 @@ class Dc_Translator_Block_Adminhtml_System_Config_Form_Field_Test extends Mage_A
         $buttonBlock = $this->getLayout()->createBlock('adminhtml/widget_button');
         $data = array(
             'label'     => Mage::helper('translator')->__('Run Test'),
-            'onclick'   => 'setLocation(\''. $this->getUrl('translator/adminhtml_credential/test') . '\' );',
+            'onclick'   => 'setLocation(\''. $this->getUrl('adminhtml/translator_credential/test') . '\' );',
             'class'     => '',
         );
         $html = $buttonBlock->setData($data)->toHtml();

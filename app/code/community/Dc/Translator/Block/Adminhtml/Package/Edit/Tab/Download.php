@@ -10,7 +10,7 @@
  *
  * @category   Dc
  * @package    Dc_Translator
- * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @copyright  Copyright (c) 2012-2015 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -37,7 +37,7 @@ class Dc_Translator_Block_Adminhtml_Package_Edit_Tab_Download extends Mage_Admin
         $this->setForm($form);
         $fieldset = $form->addFieldset('download', array('legend' => Mage::helper('translator')->__('Download Package files')));
 
-        $_files = Mage::getModel('translator/file')->getExistingFiles($this->_getPackage()->getLocale());
+        $files = Mage::getModel('translator/file')->getExistingFiles($this->getPackage()->getLocale());
         $fieldset->addField('list_action', 'note', array(
           'name'               => 'list_action',
           'after_element_html' => '<a id="toggler_select" onclick="return DcDownloader.selectAll()" href="#">' . Mage::helper('translator')->__('Select All') . '</a><span class="separator">|</span><a id="toggler_unselect" onclick="return DcDownloader.unselectAll()" href="#">' . Mage::helper('translator')->__('Unselect All') . '</a>'
@@ -45,16 +45,16 @@ class Dc_Translator_Block_Adminhtml_Package_Edit_Tab_Download extends Mage_Admin
         $fieldset->addField('downloadable', 'checkboxes', array(
           'label'              => Mage::helper('translator')->__('Available files'),
           'name'               => 'downloadable',
-          'values'             => $_files,
+          'values'             => $files,
           'onclick'            => "",
           'onchange'           => "",
-          'value'              => array_keys($_files),
+          'value'              => array_keys($files),
           'disabled'           => false,
           'after_element_html' => '<small>' . Mage::helper('translator')->__('Selected files will be downloaded') . '</small>',
           'tabindex' => 1
         ));
         
-        if (count($_files) > 0) {
+        if (count($files) > 0) {
             $fieldset->addField('download_container', 'note', array(
                 'text' => $this->getChildHtml('download_button'),
             ));
@@ -63,7 +63,7 @@ class Dc_Translator_Block_Adminhtml_Package_Edit_Tab_Download extends Mage_Admin
         return parent::_prepareForm();
     }
     
-    private function _getPackage() {
+    private function getPackage() {
         return Mage::registry('package_data');
     }
 

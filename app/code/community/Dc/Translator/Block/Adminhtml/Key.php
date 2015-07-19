@@ -10,7 +10,7 @@
  *
  * @category   Dc
  * @package    Dc_Translator
- * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @copyright  Copyright (c) 2012-2015 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -25,24 +25,24 @@ class Dc_Translator_Block_Adminhtml_Key extends Mage_Adminhtml_Block_Widget_Grid
         $this->_addButtonLabel = Mage::helper('translator')->__('Add New Key');
         parent::__construct();
         $this->_updateButton('add', 'level', '10');
-        $this->_updateButton('add', 'onclick', 'setLocation(\'' . $this->getUrl('*/adminhtml_key/new/', array('package_id' => $this->_getPackageId())) .'\')');
+        $this->_updateButton('add', 'onclick', 'setLocation(\'' . $this->getUrl('*/translator_key/new/', array('package_id' => $this->getPackageId())) .'\')');
         $this->_addButton('packages', array(
             'label'     => Mage::helper('translator')->__('Back To Packages'),
-            'onclick'   => 'setLocation(\'' . $this->getUrl('*/adminhtml_package/') .'\')',
+            'onclick'   => 'setLocation(\'' . $this->getUrl('*/translator_package/') .'\')',
             'class'     => 'back',
         ), 0);
     }
     
     public function getPackageName()
     {
-        $_locale = Mage::getModel('translator/package')->load($this->_getPackageId())->getLocale();
+        $_locale = Mage::getModel('translator/package')->load($this->getPackageId())->getLocale();
         if ($_locale) {
             return Mage::getModel('translator/package')->getFancyName($_locale);
         }
         return false;
     }
     
-    private function _getPackageId()
+    private function getPackageId()
     {
         return $this->getRequest()->getParam('package_id');
     }

@@ -10,7 +10,7 @@
  *
  * @category   Dc
  * @package    Dc_Translator
- * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @copyright  Copyright (c) 2012-2015 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -24,15 +24,15 @@ class Dc_Translator_Block_Adminhtml_Package extends Mage_Adminhtml_Block_Widget_
         $this->_headerText = Mage::helper('translator')->__('Packages');
         $this->_addButtonLabel = Mage::helper('translator')->__('Create New Package');
         parent::__construct();
-        $this->_updateButton('add', 'onclick', 'setLocation(\'' . $this->getUrl('*/adminhtml_package/create') .'\')');
+        $this->_updateButton('add', 'onclick', 'setLocation(\'' . $this->getUrl('*/translator_package/create') .'\')');
         $this->_addButton('packages', array(
             'label'     => Mage::helper('translator')->__('Import package'),
-            'onclick'   => 'setLocation(\'' . $this->getUrl('*/adminhtml_package/import') .'\')',
+            'onclick'   => 'setLocation(\'' . $this->getUrl('*/translator_package/import') .'\')',
             'class'     => 'add',
         ), 10);
         $this->_addButton('modules', array(
             'label'     => Mage::helper('translator')->__('Refresh Modules List'),
-            'onclick'   => 'setLocation(\'' . $this->getUrl('*/adminhtml_package/refresh') .'\')',
+            'onclick'   => 'setLocation(\'' . $this->getUrl('*/translator_package/refresh') .'\')',
             'class'     => 'add',
         ), 20);
     }

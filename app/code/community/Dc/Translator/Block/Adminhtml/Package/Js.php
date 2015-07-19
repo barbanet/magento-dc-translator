@@ -10,30 +10,34 @@
  *
  * @category   Dc
  * @package    Dc_Translator
- * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @copyright  Copyright (c) 2012-2015 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
 class Dc_Translator_Block_Adminhtml_Package_Js extends Mage_Adminhtml_Block_Template
 {
 
-    public function getZipUrl() {
+    public function getZipUrl()
+    {
         return $this->getUrl(
-            'translator/adminhtml_ajax/download',
+            'adminhtml/translator_ajax/download',
             array('_secure' => Mage::app()->getStore()->isCurrentlySecure())
         );
     }
     
-    public function getPackageLocale() {
+    public function getPackageLocale()
+    {
         return Mage::registry('package_data')->getLocale();
     }
     
-    public function getUploaderUrl($file) {
+    public function getUploaderUrl($file)
+    {
         return $this->getSkinUrl('dc/translator/' . $file);
     }
     
-    public function getUploaderPost() {
-        return Mage::getModel('adminhtml/url')->addSessionParam()->getUrl('translator/adminhtml_ajax/store');
+    public function getUploaderPost()
+    {
+        return Mage::getModel('adminhtml/url')->addSessionParam()->getUrl('adminhtml/translator_ajax/store');
     }
 
 }

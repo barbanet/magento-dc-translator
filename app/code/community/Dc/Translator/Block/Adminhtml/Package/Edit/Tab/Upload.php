@@ -10,7 +10,7 @@
  *
  * @category   Dc
  * @package    Dc_Translator
- * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @copyright  Copyright (c) 2012-2015 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -36,22 +36,22 @@ class Dc_Translator_Block_Adminhtml_Package_Edit_Tab_Upload extends Mage_Adminht
         $form = new Varien_Data_Form();
         $this->setForm($form);
         $fieldset = $form->addFieldset('upload', array('legend' => Mage::helper('translator')->__('Upload Package files')));
-
-
         $fieldset->addField('file_upload', 'file', array(
             'label'     => Mage::helper('translator')->__('Filename'),
             'name'      => 'file_upload',
             'multiple'  => true,
         ));
-        
         $fieldset->addField('upload_container', 'note', array(
             'text' => $this->getChildHtml('upload_button'),
         ));
-
         return parent::_prepareForm();
     }
-    
-    private function _getPackage() {
+
+    /**
+     * @return mixed
+     * @deprecated
+     */
+    private function getPackage() {
         return Mage::registry('package_data');
     }
 

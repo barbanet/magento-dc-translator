@@ -10,7 +10,7 @@
  *
  * @category   Dc
  * @package    Dc_Translator
- * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @copyright  Copyright (c) 2012-2015 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -49,13 +49,13 @@ class Dc_Translator_Block_Adminhtml_Package_Grid extends Mage_Adminhtml_Block_Wi
             'type'      => 'options',
             'options'   => Mage::getModel('translator/package')->toOptionArray()
         ));
-        $dateFormatIso = Mage::app()->getLocale()->getDateTimeFormat(Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
+        $date_format = Mage::app()->getLocale()->getDateTimeFormat(Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
         $this->addColumn('created_at', array(
             'header'    => Mage::helper('translator')->__('Created At'),
             'align'     =>'left',
             'index'     => 'created_at',
             'type'      => 'datetime',
-            'format'    => $dateFormatIso,
+            'format'    => $date_format,
             'width'     => '180px' 
         ));
         $this->addColumn('updated_at', array(
@@ -63,7 +63,7 @@ class Dc_Translator_Block_Adminhtml_Package_Grid extends Mage_Adminhtml_Block_Wi
             'align'     =>'left',
             'index'     => 'updated_at',
             'type'      => 'datetime',
-            'format'    => $dateFormatIso,
+            'format'    => $date_format,
             'width'     => '180px'
         ));
         $this->addColumn('action_edit',

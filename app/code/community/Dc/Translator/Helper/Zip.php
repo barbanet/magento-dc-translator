@@ -10,7 +10,7 @@
  *
  * @category   Dc
  * @package    Dc_Translator
- * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @copyright  Copyright (c) 2012-2015 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -45,84 +45,99 @@ class Dc_Translator_Helper_Zip extends Mage_Core_Helper_Abstract
     
     const VERSION = '0.2.2';
 
+    /**
+     * @var array
+     */
     public $opt = array();
+
+    /**
+     * @var array
+     */
     public $files = array();
+
+    /**
+     * @var int
+     */
     public $cdr_ofs = 0;
+
+    /**
+     * @var int
+     */
     public $ofs = 0; 
 
-
-  #
-  # Create a new ZipStream object.
-  #
-  # Parameters:
-  #
-  #   $name - Name of output file (optional).
-  #   $opt  - Hash of archive options (optional, see "Archive Options"
-  #           below).
-  #
-  # Archive Options:
-  #
-  #   comment             - Comment for this archive.
-  #   content_type        - HTTP Content-Type.  Defaults to 'application/x-zip'.
-  #   content_disposition - HTTP Content-Disposition.  Defaults to 
-  #                         'attachment; filename=\"FILENAME\"', where
-  #                         FILENAME is the specified filename.
-  #   large_file_size     - Size, in bytes, of the largest file to try
-  #                         and load into memory (used by
-  #                         add_file_from_path()).  Large files may also
-  #                         be compressed differently; see the
-  #                         'large_file_method' option.
-  #   large_file_method   - How to handle large files.  Legal values are
-  #                         'store' (the default), or 'deflate'.  Store
-  #                         sends the file raw and is significantly
-  #                         faster, while 'deflate' compresses the file
-  #                         and is much, much slower.  Note that deflate
-  #                         must compress the file twice and extremely
-  #                         slow.
-  #   send_http_headers   - Boolean indicating whether or not to send
-  #                         the HTTP headers for this file.
-  #
-  # Note that content_type and content_disposition do nothing if you are
-  # not sending HTTP headers.
-  #
-  # Large File Support:
-  #
-  # By default, the method add_file_from_path() will send send files
-  # larger than 20 megabytes along raw rather than attempting to
-  # compress them.  You can change both the maximum size and the
-  # compression behavior using the large_file_* options above, with the
-  # following caveats:
-  #
-  # * For "small" files (e.g. files smaller than large_file_size), the
-  #   memory use can be up to twice that of the actual file.  In other
-  #   words, adding a 10 megabyte file to the archive could potentially
-  #   occupty 20 megabytes of memory.
-  #
-  # * Enabling compression on large files (e.g. files larger than
-  #   large_file_size) is extremely slow, because ZipStream has to pass
-  #   over the large file once to calculate header information, and then
-  #   again to compress and send the actual data.
-  #
-  # Examples:
-  #
-  #   # create a new zip file named 'foo.zip'
-  #   $zip = new ZipStream('foo.zip');
-  #
-  #   # create a new zip file named 'bar.zip' with a comment
-  #   $zip = new ZipStream('bar.zip', array(
-  #     'comment' => 'this is a comment for the zip file.',
-  #   ));
-  #
-  # Notes:
-  #
-  # If you do not set a filename, then this library _DOES NOT_ send HTTP
-  # headers by default.  This behavior is to allow software to send its
-  # own headers (including the filename), and still use this library.
-  #
-
-
-
-    public function init($name = null, $opt = array()) {
+    /**
+     * Create a new ZipStream object.
+     *
+     * Parameters:
+     *
+     *   $name - Name of output file (optional).
+     *   $opt  - Hash of archive options (optional, see "Archive Options"
+     *           below).
+     *
+     * Archive Options:
+     *
+     *   comment             - Comment for this archive.
+     *   content_type        - HTTP Content-Type.  Defaults to 'application/x-zip'.
+     *   content_disposition - HTTP Content-Disposition.  Defaults to
+     *                         'attachment; filename=\"FILENAME\"', where
+     *                         FILENAME is the specified filename.
+     *   large_file_size     - Size, in bytes, of the largest file to try
+     *                         and load into memory (used by
+     *                         add_file_from_path()).  Large files may also
+     *                         be compressed differently; see the
+     *                         'large_file_method' option.
+     *   large_file_method   - How to handle large files.  Legal values are
+     *                         'store' (the default), or 'deflate'.  Store
+     *                         sends the file raw and is significantly
+     *                         faster, while 'deflate' compresses the file
+     *                         and is much, much slower.  Note that deflate
+     *                         must compress the file twice and extremely
+     *                         slow.
+     *   send_http_headers   - Boolean indicating whether or not to send
+     *                         the HTTP headers for this file.
+     *
+     * Note that content_type and content_disposition do nothing if you are
+     * not sending HTTP headers.
+     *
+     * Large File Support:
+     *
+     * By default, the method add_file_from_path() will send send files
+     * larger than 20 megabytes along raw rather than attempting to
+     * compress them.  You can change both the maximum size and the
+     * compression behavior using the large_file_* options above, with the
+     * following caveats:
+     *
+     * - For "small" files (e.g. files smaller than large_file_size), the
+     *   memory use can be up to twice that of the actual file.  In other
+     *   words, adding a 10 megabyte file to the archive could potentially
+     *   occupty 20 megabytes of memory.
+     *
+     * - Enabling compression on large files (e.g. files larger than
+     *   large_file_size) is extremely slow, because ZipStream has to pass
+     *   over the large file once to calculate header information, and then
+     *   again to compress and send the actual data.
+     *
+     * Examples:
+     *
+     * - create a new zip file named 'foo.zip'
+     *   $zip = new ZipStream('foo.zip');
+     *
+     * - create a new zip file named 'bar.zip' with a comment
+     *   $zip = new ZipStream('bar.zip', array(
+     *     'comment' => 'this is a comment for the zip file.',
+     *   ));
+     *
+     * Notes:
+     *
+     * If you do not set a filename, then this library _DOES NOT_ send HTTP
+     * headers by default.  This behavior is to allow software to send its
+     * own headers (including the filename), and still use this library.
+     *
+     * @param null $name
+     * @param array $opt
+     */
+    public function init($name = null, $opt = array())
+    {
         # save options
         $this->opt = $opt;
 
@@ -139,42 +154,41 @@ class Dc_Translator_Helper_Zip extends Mage_Core_Helper_Abstract
         } 
     }
 
-
-
-
-  #
-  # add_file - add a file to the archive
-  #
-  # Parameters:
-  #   
-  #  $name - path of file in archive (including directory).
-  #  $data - contents of file
-  #  $opt  - Hash of options for file (optional, see "File Options"
-  #          below).  
-  #
-  # File Options: 
-  #  time     - Last-modified timestamp (seconds since the epoch) of
-  #             this file.  Defaults to the current time.
-  #  comment  - Comment related to this file.
-  #
-  # Examples:
-  #
-  #   # add a file named 'foo.txt'
-  #   $data = file_get_contents('foo.txt');
-  #   $zip->add_file('foo.txt', $data);
-  # 
-  #   # add a file named 'bar.jpg' with a comment and a last-modified
-  #   # time of two hours ago
-  #   $data = file_get_contents('bar.jpg');
-  #   $zip->add_file('bar.jpg', $data, array(
-  #     'time'    => time() - 2 * 3600,
-  #     'comment' => 'this is a comment about bar.jpg',
-  #   ));
-  #
-
-
-
-    public function add_file($name, $data, $opt = array()) {
+    /**
+     * add_file - add a file to the archive
+     *
+     * Parameters:
+     *
+     *  $name - path of file in archive (including directory).
+     *  $data - contents of file
+     *  $opt  - Hash of options for file (optional, see "File Options"
+     *          below).
+     *
+     * File Options:
+     *  time     - Last-modified timestamp (seconds since the epoch) of
+     *             this file.  Defaults to the current time.
+     *  comment  - Comment related to this file.
+     *
+     * Examples:
+     *
+     * - add a file named 'foo.txt'
+     *   $data = file_get_contents('foo.txt');
+     *   $zip->add_file('foo.txt', $data);
+     *
+     * - add a file named 'bar.jpg' with a comment and a last-modified
+     * - time of two hours ago
+     *   $data = file_get_contents('bar.jpg');
+     *   $zip->add_file('bar.jpg', $data, array(
+     *     'time'    => time() - 2 * 3600,
+     *     'comment' => 'this is a comment about bar.jpg',
+     *   ));
+     *
+     * @param $name
+     * @param $data
+     * @param array $opt
+     */
+    public function add_file($name, $data, $opt = array())
+    {
         # compress data
         $zdata = gzdeflate($data);
 
@@ -191,47 +205,46 @@ class Dc_Translator_Helper_Zip extends Mage_Core_Helper_Abstract
         $this->send($zdata);
     }
 
-
-
-
-  #
-  # add_file_from_path - add a file at path to the archive.
-  #
-  # Note that large files may be compresed differently than smaller
-  # files; see the "Large File Support" section above for more
-  # information.
-  #
-  # Parameters:
-  #   
-  #  $name - name of file in archive (including directory path).
-  #  $path - path to file on disk (note: paths should be encoded using
-  #          UNIX-style forward slashes -- e.g '/path/to/some/file').
-  #  $opt  - Hash of options for file (optional, see "File Options"
-  #          below).  
-  #
-  # File Options: 
-  #  time     - Last-modified timestamp (seconds since the epoch) of
-  #             this file.  Defaults to the current time.
-  #  comment  - Comment related to this file.
-  #
-  # Examples:
-  #
-  #   # add a file named 'foo.txt' from the local file '/tmp/foo.txt'
-  #   $zip->add_file_from_path('foo.txt', '/tmp/foo.txt');
-  # 
-  #   # add a file named 'bigfile.rar' from the local file
-  #   # '/usr/share/bigfile.rar' with a comment and a last-modified
-  #   # time of two hours ago
-  #   $path = '/usr/share/bigfile.rar';
-  #   $zip->add_file_from_path('bigfile.rar', $path, array(
-  #     'time'    => time() - 2 * 3600,
-  #     'comment' => 'this is a comment about bar.jpg',
-  #   ));
-  #
-
-
-
-    public function add_file_from_path($name, $path, $opt = array()) {
+    /**
+     * add_file_from_path - add a file at path to the archive.
+     *
+     * Note that large files may be compresed differently than smaller
+     * files; see the "Large File Support" section above for more
+     * information.
+     *
+     * Parameters:
+     *
+     *  $name - name of file in archive (including directory path).
+     *  $path - path to file on disk (note: paths should be encoded using
+     *          UNIX-style forward slashes -- e.g '/path/to/some/file').
+     *  $opt  - Hash of options for file (optional, see "File Options"
+     *          below).
+     *
+     * File Options:
+     *  time     - Last-modified timestamp (seconds since the epoch) of
+     *             this file.  Defaults to the current time.
+     *  comment  - Comment related to this file.
+     *
+     * Examples:
+     *
+     * - add a file named 'foo.txt' from the local file '/tmp/foo.txt'
+     *   $zip->add_file_from_path('foo.txt', '/tmp/foo.txt');
+     *
+     * - add a file named 'bigfile.rar' from the local file
+     * - '/usr/share/bigfile.rar' with a comment and a last-modified
+     * - time of two hours ago
+     *   $path = '/usr/share/bigfile.rar';
+     *   $zip->add_file_from_path('bigfile.rar', $path, array(
+     *     'time'    => time() - 2 * 3600,
+     *     'comment' => 'this is a comment about bar.jpg',
+     *   ));
+     *
+     * @param $name
+     * @param $path
+     * @param array $opt
+     */
+    public function add_file_from_path($name, $path, $opt = array())
+    {
         if ($this->is_large_file($path)) {
             # file is too large to be read into memory; add progressively
             $this->add_large_file($name, $path, $opt);
@@ -243,41 +256,38 @@ class Dc_Translator_Helper_Zip extends Mage_Core_Helper_Abstract
         }
     }
 
-
-
-  #
-  # finish - Write zip footer to stream.
-  #
-  # Example:
-  #
-  #   # add a list of files to the archive
-  #   $files = array('foo.txt', 'bar.jpg');
-  #   foreach ($files as $path)
-  #     $zip->add_file($path, file_get_contents($path));
-  # 
-  #   # write footer to stream
-  #   $zip->finish();
-  # 
-
-
-    function finish() {
+    /**
+     * finish - Write zip footer to stream.
+     *
+     * Example:
+     *
+     * - add a list of files to the archive
+     *   $files = array('foo.txt', 'bar.jpg');
+     *   foreach ($files as $path)
+     *     $zip->add_file($path, file_get_contents($path));
+     *
+     * - write footer to stream
+     *   $zip->finish();
+     */
+    function finish()
+    {
         # add trailing cdr record
         $this->add_cdr($this->opt);
         $this->clear();
     }
 
-
-
-  ###################
-  # PRIVATE METHODS #
-  ###################
-
-  #
-  # Create and send zip header for this file.
-  #
-
-
-    private function add_file_header($name, $opt, $meth, $crc, $zlen, $len) {
+    /**
+     * Create and send zip header for this file.
+     *
+     * @param $name
+     * @param $opt
+     * @param $meth
+     * @param $crc
+     * @param $zlen
+     * @param $len
+     */
+    private function add_file_header($name, $opt, $meth, $crc, $zlen, $len)
+    {
         # strip leading slashes from file name
         # (fixes bug in windows archive viewer)
         $name = preg_replace('/^\\/+/', '', $name);
@@ -314,15 +324,15 @@ class Dc_Translator_Helper_Zip extends Mage_Core_Helper_Abstract
         $this->add_to_cdr($name, $opt, $meth, $crc, $zlen, $len, $cdr_len);
     }
 
-
-
-
-
-  #
-  # Add a large file from the given path.
-  #
-
-    private function add_large_file($name, $path, $opt = array()) {
+    /**
+     * Add a large file from the given path.
+     *
+     * @param $name
+     * @param $path
+     * @param array $opt
+     */
+    private function add_large_file($name, $path, $opt = array())
+    {
         $st = stat($path);
         $block_size = 1048576; # process in 1 megabyte chunks
         $algo = 'crc32b';
@@ -380,37 +390,42 @@ class Dc_Translator_Helper_Zip extends Mage_Core_Helper_Abstract
         fclose($fh);
     }
 
-
-
-
-  #
-  # Is this file larger than large_file_size?
-  #
-
-
-
-    public function is_large_file($path) {
+    /**
+     * Is this file larger than large_file_size?
+     *
+     * @param $path
+     * @return bool
+     */
+    public function is_large_file($path)
+    {
         $st = stat($path);
         return ($this->opt['large_file_size'] > 0) && ($st['size'] > $this->opt['large_file_size']);
     }
 
-
-
-  #
-  # Save file attributes for trailing CDR record.
-  #
-    private function add_to_cdr($name, $opt, $meth, $crc, $zlen, $len, $rec_len) {
+    /**
+     * Save file attributes for trailing CDR record.
+     *
+     * @param $name
+     * @param $opt
+     * @param $meth
+     * @param $crc
+     * @param $zlen
+     * @param $len
+     * @param $rec_len
+     */
+    private function add_to_cdr($name, $opt, $meth, $crc, $zlen, $len, $rec_len)
+    {
         $this->files[] = array($name, $opt, $meth, $crc, $zlen, $len, $this->ofs);
         $this->ofs += $rec_len;
     }
 
-
-
-
-  #
-  # Send CDR record for specified file.
-  #
-    private function add_cdr_file($args) {
+    /**
+     * Send CDR record for specified file.
+     *
+     * @param $args
+     */
+    private function add_cdr_file($args)
+    {
         list ($name, $opt, $meth, $crc, $zlen, $len, $ofs) = $args;
 
         # get attributes
@@ -447,12 +462,13 @@ class Dc_Translator_Helper_Zip extends Mage_Core_Helper_Abstract
         $this->cdr_ofs += strlen($ret);
     }
 
-
-
-  #
-  # Send CDR EOF (Central Directory Record End-of-File) record.
-  #
-    private function add_cdr_eof($opt = null) {
+    /**
+     * Send CDR EOF (Central Directory Record End-of-File) record.
+     *
+     * @param null $opt
+     */
+    private function add_cdr_eof($opt = null)
+    {
         $num = count($this->files);
         $cdr_len = $this->cdr_ofs;
         $cdr_ofs = $this->ofs;
@@ -478,44 +494,35 @@ class Dc_Translator_Helper_Zip extends Mage_Core_Helper_Abstract
         $this->send($ret);
     }
 
-
-
-
-  #
-  # Add CDR (Central Directory Record) footer.
-  #
-    private function add_cdr($opt = null) {
+    /**
+     * Add CDR (Central Directory Record) footer.
+     *
+     * @param null $opt
+     */
+    private function add_cdr($opt = null)
+    {
         foreach ($this->files as $file) {
             $this->add_cdr_file($file);
         }
         $this->add_cdr_eof($opt);
     }
 
-
-
-  #
-  # Clear all internal variables.  Note that the stream object is not
-  # usable after this.
-  #
-    public function clear() {
+    /**
+     * Clear all internal variables.  Note that the stream object is not usable after this.
+     */
+    public function clear()
+    {
         $this->files = array();
         $this->ofs = 0;
         $this->cdr_ofs = 0;
         $this->opt = array();
     }
 
-
-
-
-  ###########################
-  # PRIVATE UTILITY METHODS #
-  ###########################
-
-
-  #
-  # Send HTTP headers for this stream.
-  #
-    private function send_http_headers() {
+    /**
+     * Send HTTP headers for this stream.
+     */
+    private function send_http_headers()
+    {
         # grab options
         $opt = $this->opt;
 
@@ -548,13 +555,13 @@ class Dc_Translator_Helper_Zip extends Mage_Core_Helper_Abstract
         }
     }
 
-
-
-
-  #
-  # Send string, sending HTTP headers if necessary.
-  #
-    private function send($str) {
+    /**
+     * Send string, sending HTTP headers if necessary.
+     *
+     * @param $str
+     */
+    private function send($str)
+    {
         if ($this->need_headers) {
             $this->send_http_headers();
         }
@@ -562,12 +569,14 @@ class Dc_Translator_Helper_Zip extends Mage_Core_Helper_Abstract
         echo $str;
     }
 
-
-
-  #
-  # Convert a UNIX timestamp to a DOS timestamp.
-  #
-    public function dostime($when = 0) {
+    /**
+     * Convert a UNIX timestamp to a DOS timestamp.
+     *
+     * @param int $when
+     * @return int
+     */
+    public function dostime($when = 0)
+    {
         # get date array for timestamp
         $d = getdate($when);
 
@@ -583,13 +592,14 @@ class Dc_Translator_Helper_Zip extends Mage_Core_Helper_Abstract
         return ($d['year'] << 25) | ($d['mon'] << 21) | ($d['mday'] << 16) | ($d['hours'] << 11) | ($d['minutes'] << 5) | ($d['seconds'] >> 1);
     }
 
-
-
-  #
-  # Create a format string and argument list for pack(), then call
-  # pack() and return the result.
-  #
-    public function pack_fields($fields) {
+    /**
+     * Create a format string and argument list for pack(), then call pack() and return the result.
+     *
+     * @param $fields
+     * @return mixed
+     */
+    public function pack_fields($fields)
+    {
         list ($fmt, $args) = array('', array());
 
         # populate format string and argument list

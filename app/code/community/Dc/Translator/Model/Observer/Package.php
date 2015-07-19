@@ -133,38 +133,37 @@ class Dc_Translator_Model_Observer_Package
     }
 
     /**
+     * Import file after the new files are uploaded using the package manager.
+     *
      * @param $observer
      */
     public function upload($observer)
     {
-        $_modules = array_keys((array) Mage::getConfig()->getNode('modules'));
-        sort($_modules);
-
+        $modules = array_keys((array) Mage::getConfig()->getNode('modules'));
+        sort($modules);
         $now = now();
         $locale_code = $observer->getLocale();
         $locale_id = Mage::getSingleton('translator/package')->getPackageByLocale($observer->getLocale())->getPackageId();
         $package_file = $observer->getPackageFile();
-        
         $path = Mage::getBaseDir() . DS . 'app' . DS . 'locale' . DS . $locale_code;
-        
-        foreach ($_modules as $_name) {
-            $_config_file = Mage::getModuleDir('etc', $_name) . DS . 'config.xml';
-            $_config_xml = new Varien_Simplexml_Config($_config_file);
-            foreach ($_config_xml->getNode()->frontend->translate->modules as $values) {
-                $_frontend_name = $values->children()->getName();
+        foreach ($modules as $name) {
+            $config_file = Mage::getModuleDir('etc', $name) . DS . 'config.xml';
+            $config_xml = new Varien_Simplexml_Config($config_file);
+            foreach ($config_xml->getNode()->frontend->translate->modules as $values) {
+                $frontend_name = $values->children()->getName();
             }
-            $file = $_config_xml->getNode()->frontend->translate->modules->$_frontend_name->files->default;
+            $file = $config_xml->getNode()->frontend->translate->modules->$frontend_name->files->default;
             if (!$file) {
-                foreach ($_config_xml->getNode()->adminhtml->translate->modules as $values) {
-                    $_adminhtml_name = $values->children()->getName();
+                foreach ($config_xml->getNode()->adminhtml->translate->modules as $values) {
+                    $adminhtml_name = $values->children()->getName();
                 }
-                $file = $_config_xml->getNode()->adminhtml->translate->modules->$_adminhtml_name->files->default;
+                $file = $config_xml->getNode()->adminhtml->translate->modules->$adminhtml_name->files->default;
             }
             if (!$file) {
-                foreach ($_config_xml->getNode()->install->translate->modules as $values) {
-                    $_install_name = $values->children()->getName();
+                foreach ($config_xml->getNode()->install->translate->modules as $values) {
+                    $install_name = $values->children()->getName();
                 }
-                $file = $_config_xml->getNode()->install->translate->modules->$_install_name->files->default;
+                $file = $config_xml->getNode()->install->translate->modules->$install_name->files->default;
             }
             if ($file == $package_file) {
                 if (file_exists($path . DS . $file)) {
@@ -177,7 +176,7 @@ class Dc_Translator_Model_Observer_Package
                             $translation = substr($values[1], 0, (strlen($values[1]) - 1));
                             $insert = array(
                                             'package_id' => $locale_id,
-                                            'package_module' => $_name,
+                                            'package_module' => $name,
                                             'package_key' => $key,
                                             'package_value' => $translation,
                                             'created_at' => $now,
@@ -188,7 +187,7 @@ class Dc_Translator_Model_Observer_Package
                     }
                 }
             }
-            unset($_config_xml);
+            unset($config_xml);
         }
     }
 

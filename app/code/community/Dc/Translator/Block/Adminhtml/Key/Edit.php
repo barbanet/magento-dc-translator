@@ -10,15 +10,22 @@
  *
  * @category   Dc
  * @package    Dc_Translator
- * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @copyright  Copyright (c) 2012-2015 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
 class Dc_Translator_Block_Adminhtml_Key_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
 {
-    
-    protected $_button_previous;
-    protected $_button_next;
+
+    /**
+     * @var
+     */
+    protected $button_previous;
+
+    /**
+     * @var
+     */
+    protected $button_next;
 
     public function __construct()
     {
@@ -27,10 +34,10 @@ class Dc_Translator_Block_Adminhtml_Key_Edit extends Mage_Adminhtml_Block_Widget
         $this->_blockGroup = 'translator';
         $this->_controller = 'adminhtml_key';
         $this->_removeButton('reset');
-        $this->_updateButton('back', 'onclick', 'setLocation(\'' . $this->getUrl('*/adminhtml_key/', array('package_id' => $this->_getPackageId())) .'\')');
-        $this->_getPrevNext();
-        $this->_getButtonPrevious();
-        $this->_getButtonNext();
+        $this->_updateButton('back', 'onclick', 'setLocation(\'' . $this->getUrl('*/adminhtml_key/', array('package_id' => $this->getPackageId())) .'\')');
+        $this->getPrevNext();
+        $this->getButtonPrevious();
+        $this->getButtonNext();
     }
 
     public function getHeaderText()
@@ -51,7 +58,7 @@ class Dc_Translator_Block_Adminhtml_Key_Edit extends Mage_Adminhtml_Block_Widget
         return false;
     }
     
-    private function _getPackageId()
+    private function getPackageId()
     {
         if ($this->getRequest()->getParam('package_id')) {
             return $this->getRequest()->getParam('package_id');
@@ -60,12 +67,12 @@ class Dc_Translator_Block_Adminhtml_Key_Edit extends Mage_Adminhtml_Block_Widget
         }
     }
     
-    private function _getPrevNext()
+    private function getPrevNext()
     {
         if (Mage::registry('key_data')->getKeyId()) {
             $_position_current = false;
             $_collection = Mage::getModel('translator/key')->getCollection()
-                            ->addFieldToFilter('package_id', array('eq' => $this->_getPackageId()));
+                            ->addFieldToFilter('package_id', array('eq' => $this->getPackageId()));
             $_collection_array = $_collection->toArray();
             if (isset($_collection_array['items'])) {
                 foreach ($_collection_array['items'] as $_array_key => $_array_value) {
@@ -76,33 +83,33 @@ class Dc_Translator_Block_Adminhtml_Key_Edit extends Mage_Adminhtml_Block_Widget
                 }
                 if ($_position_current) {
                     if (isset($_collection_array['items'][($_position_current-1)])) {
-                        $this->_button_previous = $_collection_array['items'][($_position_current-1)]['key_id'];
+                        $this->button_previous = $_collection_array['items'][($_position_current-1)]['key_id'];
                     }
                     if (isset($_collection_array['items'][($_position_current+1)])) {
-                        $this->_button_next = $_collection_array['items'][($_position_current+1)]['key_id'];
+                        $this->button_next = $_collection_array['items'][($_position_current+1)]['key_id'];
                     }
                 }
             }
         }
     }
     
-    protected function _getButtonPrevious()
+    protected function getButtonPrevious()
     {
-        if ($this->_button_previous) {
+        if ($this->button_previous) {
             $this->_addButton('key_previous', array(
                 'label'     => Mage::helper('translator')->__('Previous'),
-                'onclick'   => 'setLocation(\'' . $this->getUrl('*/adminhtml_key/edit', array('id' => $this->_button_previous)) . '\')',
+                'onclick'   => 'setLocation(\'' . $this->getUrl('*/adminhtml_key/edit', array('id' => $this->button_previous)) . '\')',
                 'class'     => '',
             ), 0);
         }
     }
     
-    protected function _getButtonNext()
+    protected function getButtonNext()
     {
-        if ($this->_button_next) {
+        if ($this->button_next) {
             $this->_addButton('key_next', array(
                 'label'     => Mage::helper('translator')->__('Next'),
-                'onclick'   => 'setLocation(\'' . $this->getUrl('*/adminhtml_key/edit', array('id' => $this->_button_next)) . '\')',
+                'onclick'   => 'setLocation(\'' . $this->getUrl('*/adminhtml_key/edit', array('id' => $this->button_next)) . '\')',
                 'class'     => '',
             ), 0);
         }

@@ -10,7 +10,7 @@
  *
  * @category   Dc
  * @package    Dc_Translator
- * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @copyright  Copyright (c) 2012-2015 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -27,7 +27,7 @@ class Dc_Translator_Block_Adminhtml_Key_Grid extends Mage_Adminhtml_Block_Widget
         $this->setUseAjax(true);
     }
 
-    private function _getPackageId()
+    private function getPackageId()
     {
         return $this->getRequest()->getParam('package_id');
     }
@@ -35,7 +35,7 @@ class Dc_Translator_Block_Adminhtml_Key_Grid extends Mage_Adminhtml_Block_Widget
     protected function _prepareCollection()
     {
         $collection = Mage::getModel('translator/key')->getCollection()
-                        ->addFieldToFilter('package_id', array('eq' => $this->_getPackageId()));
+                        ->addFieldToFilter('package_id', array('eq' => $this->getPackageId()));
         $this->setCollection($collection);
         return parent::_prepareCollection();
     }
@@ -53,7 +53,7 @@ class Dc_Translator_Block_Adminhtml_Key_Grid extends Mage_Adminhtml_Block_Widget
             'align'     =>'left',
             'index'     => 'package_module',
             'type'      => 'options',
-            'options'   => Mage::getModel('translator/key')->getPackageModules($this->_getPackageId())
+            'options'   => Mage::getModel('translator/key')->getPackageModules($this->getPackageId())
         ));
         $this->addColumn('package_key', array(
             'header'    => Mage::helper('translator')->__('Key'),
@@ -65,13 +65,13 @@ class Dc_Translator_Block_Adminhtml_Key_Grid extends Mage_Adminhtml_Block_Widget
             'align'     =>'left',
             'index'     => 'package_value'
         ));
-        $dateFormatIso = Mage::app()->getLocale()->getDateTimeFormat(Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
+        $date_format = Mage::app()->getLocale()->getDateTimeFormat(Mage_Core_Model_Locale::FORMAT_TYPE_MEDIUM);
         $this->addColumn('created_at', array(
             'header'    => Mage::helper('translator')->__('Created At'),
             'align'     =>'left',
             'index'     => 'created_at',
             'type'      => 'datetime',
-            'format'    => $dateFormatIso,
+            'format'    => $date_format,
             'width'     => '150px' 
         ));
         $this->addColumn('updated_at', array(
@@ -79,7 +79,7 @@ class Dc_Translator_Block_Adminhtml_Key_Grid extends Mage_Adminhtml_Block_Widget
             'align'     =>'left',
             'index'     => 'updated_at',
             'type'      => 'datetime',
-            'format'    => $dateFormatIso,
+            'format'    => $date_format,
             'width'     => '150px'
         ));
         $this->addColumn('action',

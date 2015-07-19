@@ -10,44 +10,44 @@
  *
  * @category   Dc
  * @package    Dc_Translator
- * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @copyright  Copyright (c) 2012-2015 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-$_modules = array_keys((array) Mage::getConfig()->getNode('modules'));
-sort($_modules);
-foreach ($_modules as $_name) {
-    $_config_file = Mage::getModuleDir('etc', $_name) . DS . 'config.xml';
-    if (file_exists($_config_file)) {
+$modules = array_keys((array) Mage::getConfig()->getNode('modules'));
+sort($modules);
+foreach ($modules as $name) {
+    $config_file = Mage::getModuleDir('etc', $name) . DS . 'config.xml';
+    if (file_exists($config_file)) {
         $file = false;
-        $_config_xml = new Varien_Simplexml_Config($_config_file);
-        if ($_config_xml->getNode()->frontend->translate) {
-            foreach ($_config_xml->getNode()->frontend->translate->modules as $values) {
-                $_frontend_name = $values->children()->getName();
+        $config_xml = new Varien_Simplexml_Config($config_file);
+        if ($config_xml->getNode()->frontend->translate) {
+            foreach ($config_xml->getNode()->frontend->translate->modules as $values) {
+                $frontend_name = $values->children()->getName();
             }
-            $file = $_config_xml->getNode()->frontend->translate->modules->$_frontend_name->files->default;
+            $file = $config_xml->getNode()->frontend->translate->modules->$frontend_name->files->default;
         }
         if (!$file) {
-            if ($_config_xml->getNode()->adminhtml->translate) {
-                foreach ($_config_xml->getNode()->adminhtml->translate->modules as $values) {
-                    $_adminhtml_name = $values->children()->getName();
+            if ($config_xml->getNode()->adminhtml->translate) {
+                foreach ($config_xml->getNode()->adminhtml->translate->modules as $values) {
+                    $adminhtml_name = $values->children()->getName();
                 }
-                $file = $_config_xml->getNode()->adminhtml->translate->modules->$_adminhtml_name->files->default;
+                $file = $config_xml->getNode()->adminhtml->translate->modules->$adminhtml_name->files->default;
             }
         }
         if (!$file) {
-            if ($_config_xml->getNode()->install->translate) {
-                foreach ($_config_xml->getNode()->install->translate->modules as $values) {
-                    $_install_name = $values->children()->getName();
+            if ($config_xml->getNode()->install->translate) {
+                foreach ($config_xml->getNode()->install->translate->modules as $values) {
+                    $install_name = $values->children()->getName();
                 }
-                $file = $_config_xml->getNode()->install->translate->modules->$_install_name->files->default;
+                $file = $config_xml->getNode()->install->translate->modules->$install_name->files->default;
             }
         }
         if ($file) {
-            $data = array('package_module' => $_name, 'file_name' => (string)$file);
+            $data = array('package_module' => $name, 'file_name' => (string)$file);
             Mage::getModel('translator/file')->setData($data)->save();
         }
-        unset($_config_xml);
+        unset($config_xml);
     }
 }
 $connection = Mage::getSingleton('core/resource')->getConnection('read');
@@ -59,4 +59,3 @@ $connection->query("UPDATE {$table_key} SET package_module =
                     WHERE {$table_key}.package_module = SUBSTRING(f.file_name, 1, (LOCATE('.',f.file_name)-1)))
                     WHERE LOCATE('_',package_module) = 0
                     ");
-       

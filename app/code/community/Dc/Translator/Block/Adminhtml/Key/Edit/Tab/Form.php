@@ -10,7 +10,7 @@
  *
  * @category   Dc
  * @package    Dc_Translator
- * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @copyright  Copyright (c) 2012-2015 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -40,14 +40,14 @@ class Dc_Translator_Block_Adminhtml_Key_Edit_Tab_Form extends Mage_Adminhtml_Blo
         $fieldset->addField('package_id', 'hidden', array(
             'name'      => 'package_id',
         ));
-        if ($this->_getKeyId()) {
+        if ($this->getKeyId()) {
             $fieldset->addField('package_module', 'select', array(
                 'label'     => Mage::helper('translator')->__('Module'),
                 'class'     => 'required-entry',
                 'required'  => true,
                 'disabled'  => true,
                 'name'      => 'package_module',
-                'values'   => Mage::getModel('translator/key')->getPackageModules($this->_getPackageId())
+                'values'   => Mage::getModel('translator/key')->getPackageModules($this->getPackageId())
             ));
         } else {
             $fieldset->addField('package_module', 'select', array(
@@ -55,10 +55,10 @@ class Dc_Translator_Block_Adminhtml_Key_Edit_Tab_Form extends Mage_Adminhtml_Blo
                 'class'     => 'required-entry',
                 'required'  => true,
                 'name'      => 'package_module',
-                'values'   => Mage::getModel('translator/key')->getPackageModules($this->_getPackageId())
+                'values'   => Mage::getModel('translator/key')->getPackageModules($this->getPackageId())
             ));
         }
-        if ($this->_getKeyId()) {
+        if ($this->getKeyId()) {
             $fieldset->addField('package_key', 'textarea', array(
                 'label'     => Mage::helper('translator')->__('Key'),
                 'class'     => 'required-entry',
@@ -82,17 +82,17 @@ class Dc_Translator_Block_Adminhtml_Key_Edit_Tab_Form extends Mage_Adminhtml_Blo
         ));
         
         if (Mage::getStoreConfig('translator/bing/enabled')) {
-            $_validate_locale = Mage::helper('translator/bing_locale')->validateByPackageId($this->_getPackageId());
-            if ($_validate_locale) {
+            $validate_locale = Mage::helper('translator/bing_locale')->validateByPackageId($this->getPackageId());
+            if ($validate_locale) {
                 $fieldset->addField('translate_button', 'note', array(
                     'text' => $this->getChildHtml('translate_button'),
                 ));
             }
         }
         
-        if ($this->_getKeyId()) {
+        if ($this->getKeyId()) {
             $fieldset = $form->addFieldset('options', array('legend' => Mage::helper('translator')->__('Options')));
-            $_comment = '<small>' . Mage::helper('translator')->__('Change this value if you want to translate this key with this value over all modules.')  . '</small>';
+            $comment = '<small>' . Mage::helper('translator')->__('Change this value if you want to translate this key with this value over all modules.')  . '</small>';
             $fieldset->addField('mass_update', 'select', array(
                 'label'     => Mage::helper('translator')->__('Mass Update'),
                 'class'     => 'required-entry',
@@ -102,7 +102,7 @@ class Dc_Translator_Block_Adminhtml_Key_Edit_Tab_Form extends Mage_Adminhtml_Blo
                                     '0' => Mage::helper('translator')->__('No'),
                                     '1' => Mage::helper('translator')->__('Yes'),
                                     ),
-                'after_element_html' => $_comment
+                'after_element_html' => $comment
             ));
         }
         
@@ -115,7 +115,7 @@ class Dc_Translator_Block_Adminhtml_Key_Edit_Tab_Form extends Mage_Adminhtml_Blo
         return parent::_prepareForm();
     }
     
-    private function _getPackageId()
+    private function getPackageId()
     {
         if ($this->getRequest()->getParam('package_id')) {
             Mage::registry('key_data')->setPackageId($this->getRequest()->getParam('package_id'));
@@ -123,7 +123,7 @@ class Dc_Translator_Block_Adminhtml_Key_Edit_Tab_Form extends Mage_Adminhtml_Blo
         return Mage::registry('key_data')->getPackageId();
     }
     
-    private function _getKeyId()
+    private function getKeyId()
     {
         if (Mage::registry('key_data')) {
             return Mage::registry('key_data')->getId();

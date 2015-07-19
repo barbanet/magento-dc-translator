@@ -11,22 +11,24 @@
  *
  * @category   Dc
  * @package    Dc_Translator
- * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @copyright  Copyright (c) 2012-2015 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 -->
 <layout version="0.1.0">
-    <default>
+    <translator_default>
         <reference name="head">
             <action method="addCss"><name>dc/translator/css/style.css</name></action>
         </reference>
-    </default>
-    <translator_adminhtml_package_index>
+    </translator_default>
+    <adminhtml_translator_package_index>
+        <update handle="translator_default" />
         <reference name="content">
             <block type="translator/adminhtml_package" name="translator_package" />
         </reference>
-    </translator_adminhtml_package_index>
-    <translator_adminhtml_package_edit>
+    </adminhtml_translator_package_index>
+    <adminhtml_translator_package_edit>
+        <update handle="translator_default" />
         <reference name="head">
             <action method="addItem"><type>skin_js</type><name>dc/translator/js/downloader.js</name></action>
             <action method="addItem"><type>skin_js</type><name>dc/translator/uploadify/jquery.js</name></action>
@@ -36,28 +38,32 @@
         <reference name="content">
             <block type="translator/adminhtml_package_js" name="translator.package.js" template="dc/translator/package/js.phtml" />
         </reference>
-    </translator_adminhtml_package_edit>
-    <translator_adminhtml_package_grid>
+    </adminhtml_translator_package_edit>
+    <adminhtml_translator_package_grid>
+        <update handle="translator_default" />
         <block type="core/text_list" name="root" output="toHtml">
             <block type="translator/adminhtml_package_grid" name="translator_package_grid" />
         </block>
-    </translator_adminhtml_package_grid>
-    <translator_adminhtml_key_index>
+    </adminhtml_translator_package_grid>
+    <adminhtml_translator_key_index>
+        <update handle="translator_default" />
         <reference name="content">
             <block type="translator/adminhtml_key" name="translator_key" />
         </reference>
-    </translator_adminhtml_key_index>
-    <translator_adminhtml_key_edit>
+    </adminhtml_translator_key_index>
+    <adminhtml_translator_key_edit>
+        <update handle="translator_default" />
         <reference name="head">
             <action method="addItem"><type>skin_js</type><name>dc/translator/js/translator.js</name></action>
         </reference>
         <reference name="content">
             <block type="translator/adminhtml_key_js" name="translator.key.js" template="dc/translator/key/js.phtml" />
         </reference>
-    </translator_adminhtml_key_edit>
-    <translator_adminhtml_key_grid>
+    </adminhtml_translator_key_edit>
+    <adminhtml_translator_key_grid>
+        <update handle="translator_default" />
         <block type="core/text_list" name="root" output="toHtml">
             <block type="translator/adminhtml_key_grid" name="translator_key_grid" />
         </block>
-    </translator_adminhtml_key_grid>
+    </adminhtml_translator_key_grid>
 </layout>

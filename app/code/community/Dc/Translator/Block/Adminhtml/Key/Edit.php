@@ -38,6 +38,16 @@ class Dc_Translator_Block_Adminhtml_Key_Edit extends Mage_Adminhtml_Block_Widget
         $this->getPrevNext();
         $this->getButtonPrevious();
         $this->getButtonNext();
+        $this->_addButton('saveandcontinue', array(
+            'label'     => Mage::helper('translator')->__('Save And Continue Edit'),
+            'onclick'   => 'saveAndContinueEdit()',
+            'class'     => 'save',
+        ), -100);
+        $this->_formScripts[] = "
+            function saveAndContinueEdit(){
+                editForm.submit($('edit_form').action+'back/edit/');
+            }
+        ";
     }
 
     public function getHeaderText()

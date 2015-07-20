@@ -11,32 +11,32 @@
  *
  * @category   Dc
  * @package    Dc_Dc
- * @copyright  Copyright (c) 2014 Damián Culotta. (http://www.damianculotta.com.ar/)
+ * @copyright  Copyright (c) 2011-2015 Damián Culotta. (http://www.damianculotta.com.ar/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 -->
 <config>
-	<acl>
-		<resources>
-			<all>
-				<title>Allow Everything</title>
-			</all>
-			<admin>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
                 <children>
                     <system>
                         <children>
-                        	<config>
-                        		<children>
-	                                <dc>
-	                                    <title>Dc</title>
-	                                    <sort_order>1001</sort_order>
-	                                </dc>
-								</children>
-							</config>
+                            <config>
+                                <children>
+                                    <dc>
+                                        <title>Dc</title>
+                                        <sort_order>1001</sort_order>
+                                    </dc>
+                                </children>
+                            </config>
                         </children>
                    </system>
                 </children>
             </admin>
-		</resources>
-	</acl>
+        </resources>
+    </acl>
 </config>

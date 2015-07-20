@@ -34,7 +34,7 @@ class Dc_Translator_Block_Adminhtml_Key_Edit extends Mage_Adminhtml_Block_Widget
         $this->_blockGroup = 'translator';
         $this->_controller = 'adminhtml_key';
         $this->_removeButton('reset');
-        $this->_updateButton('back', 'onclick', 'setLocation(\'' . $this->getUrl('*/adminhtml_key/', array('package_id' => $this->getPackageId())) .'\')');
+        $this->_updateButton('back', 'onclick', 'setLocation(\'' . $this->getUrl('*/translator_key/', array('package_id' => $this->getPackageId())) .'\')');
         $this->getPrevNext();
         $this->getButtonPrevious();
         $this->getButtonNext();
@@ -98,7 +98,7 @@ class Dc_Translator_Block_Adminhtml_Key_Edit extends Mage_Adminhtml_Block_Widget
         if ($this->button_previous) {
             $this->_addButton('key_previous', array(
                 'label'     => Mage::helper('translator')->__('Previous'),
-                'onclick'   => 'setLocation(\'' . $this->getUrl('*/adminhtml_key/edit', array('id' => $this->button_previous)) . '\')',
+                'onclick'   => 'setLocation(\'' . $this->getUrl('*/translator_key/edit', array('id' => $this->button_previous)) . '\')',
                 'class'     => '',
             ), 0);
         }
@@ -109,7 +109,7 @@ class Dc_Translator_Block_Adminhtml_Key_Edit extends Mage_Adminhtml_Block_Widget
         if ($this->button_next) {
             $this->_addButton('key_next', array(
                 'label'     => Mage::helper('translator')->__('Next'),
-                'onclick'   => 'setLocation(\'' . $this->getUrl('*/adminhtml_key/edit', array('id' => $this->button_next)) . '\')',
+                'onclick'   => 'setLocation(\'' . $this->getUrl('*/translator_key/edit', array('id' => $this->button_next)) . '\')',
                 'class'     => '',
             ), 0);
         }

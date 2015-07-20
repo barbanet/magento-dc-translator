@@ -94,7 +94,7 @@ class Dc_Translator_Block_Adminhtml_Package_Grid extends Mage_Adminhtml_Block_Wi
                 'actions'   => array(
                     array(
                         'caption'   => Mage::helper('translator')->__('View'),
-                        'url'       => array('base'=> '*/adminhtml_key'),
+                        'url'       => array('base'=> '*/translator_key'),
                         'field'     => 'package_id'
                     )
                 ),
@@ -127,7 +127,7 @@ class Dc_Translator_Block_Adminhtml_Package_Grid extends Mage_Adminhtml_Block_Wi
     
     public function getRowUrl($row)
     {
-        return $this->getUrl('*/adminhtml_key', array('package_id' => $row->getId()));
+        return $this->getUrl('*/translator_key', array('package_id' => $row->getId()));
     }
 
 }

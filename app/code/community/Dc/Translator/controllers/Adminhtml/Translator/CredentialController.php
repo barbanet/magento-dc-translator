@@ -17,6 +17,11 @@
 class Dc_Translator_Adminhtml_Translator_CredentialController extends Mage_Adminhtml_Controller_action
 {
 
+    protected function _isAllowed()
+    {
+        return Mage::getSingleton('admin/session')->isAllowed('system/config/translator');
+    }
+
     public function testAction()
     {
         try {

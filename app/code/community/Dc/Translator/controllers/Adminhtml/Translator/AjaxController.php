@@ -17,6 +17,11 @@
 class Dc_Translator_Adminhtml_Translator_AjaxController extends Mage_Adminhtml_Controller_Action
 {
 
+    protected function _isAllowed()
+    {
+        return Mage::getSingleton('admin/session')->isAllowed('system/translator');
+    }
+
     /**
      * Translate a given string using Bing's API.
      */

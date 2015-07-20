@@ -17,6 +17,11 @@
 class Dc_Translator_Adminhtml_Translator_PackageController extends Mage_Adminhtml_Controller_Action
 {
 
+    protected function _isAllowed()
+    {
+        return Mage::getSingleton('admin/session')->isAllowed('system/translator');
+    }
+
     protected function _initAction()
     {
         $this->loadLayout()->_setActiveMenu('system/translator');

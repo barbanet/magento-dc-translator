@@ -21,6 +21,18 @@
             <action method="addCss"><name>dc/translator/css/style.css</name></action>
         </reference>
     </translator_default>
+    <adminhtml_translator_inline_index>
+        <update handle="translator_default" />
+        <reference name="content">
+            <block type="translator/adminhtml_inline" name="translator_inline" />
+        </reference>
+    </adminhtml_translator_inline_index>
+    <adminhtml_translator_inline_grid>
+        <update handle="translator_default" />
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="translator/adminhtml_inline_grid" name="translator_inline_grid" />
+        </block>
+    </adminhtml_translator_inline_grid>
     <adminhtml_translator_package_index>
         <update handle="translator_default" />
         <reference name="content">

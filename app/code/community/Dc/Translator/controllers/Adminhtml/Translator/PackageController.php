@@ -19,7 +19,7 @@ class Dc_Translator_Adminhtml_Translator_PackageController extends Mage_Adminhtm
 
     protected function _isAllowed()
     {
-        return Mage::getSingleton('admin/session')->isAllowed('system/translator');
+        return Mage::getSingleton('admin/session')->isAllowed('system/translator/packages');
     }
 
     protected function _initAction()
@@ -216,7 +216,7 @@ class Dc_Translator_Adminhtml_Translator_PackageController extends Mage_Adminhtm
     public function massDeleteAction()
     {
         $packageIds = $this->getRequest()->getParam('packages');
-        if(!is_array($packageIds)) {
+        if (!is_array($packageIds)) {
             Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select item(s)'));
         } else {
             try {

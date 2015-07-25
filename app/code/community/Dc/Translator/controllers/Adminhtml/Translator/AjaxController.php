@@ -19,7 +19,7 @@ class Dc_Translator_Adminhtml_Translator_AjaxController extends Mage_Adminhtml_C
 
     protected function _isAllowed()
     {
-        return Mage::getSingleton('admin/session')->isAllowed('system/translator');
+        return Mage::getSingleton('admin/session')->isAllowed('system/translator/packages');
     }
 
     /**

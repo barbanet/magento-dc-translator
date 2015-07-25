@@ -103,15 +103,18 @@
             <translator_resource>
                 <class>Dc_Translator_Model_Resource</class>
                 <entities>
-                    <package>
-                        <table>dc_translator_package</table>
-                    </package>
-                    <key>
-                        <table>dc_translator_key</table>
-                    </key>
                     <file>
                         <table>dc_translator_file</table>
                     </file>
+                    <inline>
+                        <table>core_translate</table>
+                    </inline>
+                    <key>
+                        <table>dc_translator_key</table>
+                    </key>
+                    <package>
+                        <table>dc_translator_package</table>
+                    </package>
                 </entities>
             </translator_resource>
             <widget>

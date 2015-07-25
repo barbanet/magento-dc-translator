@@ -22,7 +22,18 @@
                 <translator module="translator">
                     <title>Translator</title>
                     <sort_order>25</sort_order>
-                    <action>adminhtml/translator_package</action>
+                    <children>
+                        <packages module="translator">
+                            <title>Packages</title>
+                            <sort_order>10</sort_order>
+                            <action>adminhtml/translator_package</action>
+                        </packages>
+                        <inline module="translator">
+                            <title>Translation Inline</title>
+                            <sort_order>30</sort_order>
+                            <action>adminhtml/translator_inline</action>
+                        </inline>
+                    </children>
                 </translator>
             </children>
         </system>
@@ -39,6 +50,16 @@
                             <translator>
                                 <title>Translator</title>
                                 <sort_order>1025</sort_order>
+                                <children>
+                                    <packages>
+                                        <title>Packages</title>
+                                        <sort_order>10</sort_order>
+                                    </packages>
+                                    <inline>
+                                        <title>Translation Inline</title>
+                                        <sort_order>30</sort_order>
+                                    </inline>
+                                </children>
                             </translator>
                             <config>
                                 <children>

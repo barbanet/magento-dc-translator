@@ -33,7 +33,7 @@ class Dc_Translator_Model_Package extends Mage_Core_Model_Abstract
      *
      * @return mixed
      */
-    private function _getLocales()
+    public function getLocales()
     {
         if (!$this->system_locales) {
             $locales = Mage::getSingleton('core/locale')->getOptionLocales();
@@ -52,7 +52,7 @@ class Dc_Translator_Model_Package extends Mage_Core_Model_Abstract
      */
     public function getAvailableLocales($empty = null)
     {
-        $locales = $this->_getLocales();
+        $locales = $this->getLocales();
         $available = array();
         $packages = Mage::getModel('translator/package')->getCollection();
         if ($empty) {
@@ -77,7 +77,7 @@ class Dc_Translator_Model_Package extends Mage_Core_Model_Abstract
      */
     public function toOptionArray()
     {
-        $locales = $this->_getLocales();
+        $locales = $this->getLocales();
         $available = array();
         $packages = Mage::getModel('translator/package')->getCollection();
         foreach ($packages as $package) {
@@ -95,7 +95,7 @@ class Dc_Translator_Model_Package extends Mage_Core_Model_Abstract
      */
     public function getPendingLocales()
     {
-        $locales = $this->_getLocales();
+        $locales = $this->getLocales();
         $pending = array();
         $packages = Mage::getModel('translator/package')->getCollection();
         foreach ($packages as $package) {
@@ -134,7 +134,7 @@ class Dc_Translator_Model_Package extends Mage_Core_Model_Abstract
      */
     public function getFancyName($locale)
     {
-        $locales = $this->_getLocales();
+        $locales = $this->getLocales();
         if (array_key_exists($locale, $locales)) {
             return $locales[$locale];
         }

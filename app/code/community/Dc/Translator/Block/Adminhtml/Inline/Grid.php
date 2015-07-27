@@ -90,7 +90,7 @@ class Dc_Translator_Block_Adminhtml_Inline_Grid extends Mage_Adminhtml_Block_Wid
     protected function _prepareMassaction()
     {
         $this->setMassactionIdField('key_id');
-        $this->getMassactionBlock()->setFormFieldName('inline_keys');
+        $this->getMassactionBlock()->setFormFieldName('inline');
         $this->getMassactionBlock()->addItem('delete', array(
              'label'    => Mage::helper('translator')->__('Delete'),
              'url'      => $this->getUrl('*/*/massDelete'),

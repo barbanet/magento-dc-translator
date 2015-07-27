@@ -29,6 +29,20 @@ class Dc_Translator_Block_Adminhtml_Inline_Edit_Tab_Form extends Mage_Adminhtml_
             'name'      => 'string',
         ));
 
+        $fieldset->addField('store_id', 'select', array(
+            'label'     => Mage::helper('translator')->__('Store View'),
+            'disabled'  => true,
+            'name'      => 'store_id',
+            'values'    => Mage::getSingleton('translator/inline')->getStoreOptions()
+        ));
+
+        $fieldset->addField('locale', 'select', array(
+            'label'     => Mage::helper('translator')->__('Locale'),
+            'disabled'  => true,
+            'name'      => 'locale',
+            'values'    => Mage::getModel('translator/package')->getLocales()
+        ));
+
         $fieldset->addField('translate', 'text', array(
             'label'     => Mage::helper('translator')->__('Translate'),
             'class'     => 'required-entry',

@@ -48,7 +48,7 @@ class Dc_Translator_Block_Adminhtml_Inline_Grid extends Mage_Adminhtml_Block_Wid
             'index'     => 'string'
         ));
         $this->addColumn('store_id', array(
-            'header'    => Mage::helper('translator')->__('Store ID'),
+            'header'    => Mage::helper('translator')->__('Store View'),
             'index'     => 'store_id',
             'type'      => 'options',
             'options'   => Mage::getSingleton('translator/inline')->getStoreOptions()

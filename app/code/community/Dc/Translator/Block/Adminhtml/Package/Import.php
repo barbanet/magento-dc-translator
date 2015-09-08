@@ -26,7 +26,7 @@ class Dc_Translator_Block_Adminhtml_Package_Import extends Mage_Adminhtml_Block_
         $this->_removeButton('delete');
         $this->_removeButton('reset');
         $this->_updateButton('save', 'label', Mage::helper('translator')->__('Import'));
-        $this->_updateButton('save', 'onclick', 'editForm.submit(\'' . $this->getUrl('*/adminhtml_package/saveImport') .'\')');
+        $this->_updateButton('save', 'onclick', 'editForm.submit(\'' . $this->getUrl('adminhtml/translator_package/saveImport') .'\')');
     }
 
     public function getHeaderText()

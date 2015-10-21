@@ -38,12 +38,12 @@
             </children>
         </system>
     </menu>
-	<acl>
-		<resources>
-			<all>
-				<title>Allow Everything</title>
-			</all>
-			<admin>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
                 <children>
                     <system>
                         <children>
@@ -73,6 +73,6 @@
                    </system>
                 </children>
             </admin>
-		</resources>
-	</acl>
+        </resources>
+    </acl>
 </config>

@@ -18,7 +18,7 @@
 <config>
     <modules>
         <Dc_Translator>
-            <version>1.1.2</version>
+            <version>1.1.3</version>
         </Dc_Translator>
     </modules>
     <admin>
@@ -84,8 +84,8 @@
             </translator_package_file_upload>
         </events>
     </adminhtml>
-	<global>
-	    <blocks>
+    <global>
+        <blocks>
             <translator>
                 <class>Dc_Translator_Block</class>
             </translator>
